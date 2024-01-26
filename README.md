@@ -2,9 +2,9 @@
 
 - #### Installation and Setup process
 
-This template contains 3 React MFEs. Navigate to each MFE and follow these steps.
+This template contains 2 React MFEs. Navigate to each MFE and follow these steps.
 
-<b style="color:orange">Host</b> is consuming the microfrontend while <b>remote</b> and <b>Candidate</b> is exposing their components.
+<b style="color:orange">Host</b> is consuming the microfrontend while <b>Candidate</b> is exposing their components.
 
 For Candidate
 ( Candidate is exposing the entire app through vite.config.js )
@@ -22,13 +22,19 @@ For Candidate
    npm run dev
    ```
 
-4) for building and preview run below command
+4) for building and preview the candidate directory run below command
    ```
+   cd candidate
    npm run build && npm run serve
    ```
    Similarly follow for each MFEs. Navigate inside them and install the required packages.
 
-\*Dont need to build host app. just run it using `npm run dev`.
+\*Dont need to build host app. just run it using
+
+```
+cd host
+npm run dev
+```
 
 - #### Problem statement
 
