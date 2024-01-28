@@ -1,15 +1,71 @@
-import { Routes, Route } from "react-router-dom";
+import {
+	createMemoryRouter,
+	createBrowserRouter,
+	RouterProvider,
+	Outlet,
+} from "react-router-dom";
+import Landing from "./landing";
+import Login from "./login";
+import Signup from "./signup";
+import useSyncGlobalRouter from "./useSyncGlobalRouter";
+import ErrorBoundary from "./errorBoundary";
+
+const RouteHandler = () => {
+	useSyncGlobalRouter({ basename: "/candidate" });
+	return <Outlet />;
+};
+const router =
+	import.meta.env.VITE_NODE_ENV === "development"
+		? createBrowserRouter(
+				[
+					{
+						path: "/",
+						element: <RouteHandler />,
+						children: [
+							{
+								index: "/",
+								element: <Landing />,
+							},
+							{
+								path: "login",
+								element: (
+									<ErrorBoundary>
+										<Login />
+									</ErrorBoundary>
+								),
+							},
+							{ path: "signup", element: <Signup /> },
+						],
+					},
+				],
+				{ initialEntries: [location.pathname.replace("/candidate", "") || "/"] }
+		  )
+		: createMemoryRouter(
+				[
+					{
+						path: "/",
+						element: <RouteHandler />,
+						children: [
+							{
+								index: "/",
+								element: <Landing />,
+							},
+							{
+								path: "login",
+								element: (
+									<ErrorBoundary>
+										<Login />
+									</ErrorBoundary>
+								),
+							},
+							{ path: "signup", element: <Signup /> },
+						],
+					},
+				],
+				{ initialEntries: [location.pathname.replace("/candidate", "") || "/"] }
+		  );
 function App() {
-	return (
-		<>
-			<Routes>
-				<Route path='/' element={<h1>Candidate LANDING</h1>} />
-				<Route path='/login' element={<h1>Candidate LOGIN</h1>} />
-				<Route path='/signup' element={<h1>Candidate SIGNUP</h1>} />
-			</Routes>
-			{/* <h1>Candidate Page</h1> */}
-		</>
-	);
+	return <RouterProvider router={router} />;
 }
 
 export default App;
